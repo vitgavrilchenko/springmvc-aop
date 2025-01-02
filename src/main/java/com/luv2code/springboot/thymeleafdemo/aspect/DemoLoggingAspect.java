@@ -1,6 +1,7 @@
 package com.luv2code.springboot.thymeleafdemo.aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -41,5 +42,13 @@ public class DemoLoggingAspect {
         for (Object tempArg : args) {
             myLogger.info(("=====> arg: " + tempArg));
         }
+    }
+
+    @AfterReturning(pointcut = "forAppFlow()", returning = "result")
+    public void afterReturning(JoinPoint joinPoint, Object result) {
+        String theMethod = joinPoint.getSignature().toShortString();
+        myLogger.info("=====>> in @AfterReturning: from method: " + theMethod);
+
+        myLogger.info("=======>> result: " + result);
     }
 }
